@@ -1,9 +1,9 @@
 %global release_name TigerOS
-%global dist_version 26
+%global dist_version 27
 
 Summary:        TigerOS release files
 Name:           tigeros-release
-Version:        26
+Version:        %{dist_version}
 Release:        1.0
 License:        MIT
 Group:          System Environment/Base
@@ -113,6 +113,9 @@ rm -rf %{buildroot}
 %doc README.TigerOS-Release-Notes
 
 %changelog
+* Thu Dec 14 2017 Christian Martin <ctmartin@mail.rit.edu> - 27-1.0
+- rebuild for Fedora 27
+
 * Wed Aug 30 2017 Aidan Kahrs <axk4545@rit.edu> - 26-1.0
 - rebuild for Fedora 26
 
