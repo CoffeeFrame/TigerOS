@@ -1,5 +1,5 @@
 Name:           anaconda-installclass-tigeros
-Version:        26
+Version:        27
 Release:        1%{?dist}
 Summary:        @DISTRO_NAME@ installclass for Anaconda
 
