@@ -1,6 +1,6 @@
 Summary:        TigerOS package repositories
 Name:           tigeros-repos
-Version:        26
+Version:        27
 Release:        1
 License:        MIT
 Group:          System Environment/Base
