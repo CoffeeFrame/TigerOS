@@ -83,7 +83,7 @@
       command: firewall-cmd --reload
       become: true
     - name: Update packages
-      command: dnf update
+      command: dnf update -y
       become: true
     - name: Allow Jenkins sudo access for master
       become: true
