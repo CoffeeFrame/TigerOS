@@ -1,7 +1,7 @@
 [tigeros]
 name=TigerOS $releasever - $basearch
 failovermethod=priority
-baseurl=http://tigeros.ritlug.com/packages/$basearch
+baseurl=http://builder.ritlug.com/packages/$basearch
 enabled=1
 metadata_expire=7d
 gpgcheck=1
@@ -11,7 +11,7 @@ skip_if_unavailable=False
 [tigeros-source]
 name=TigerOS $releasever - Source
 failovermethod=priority
-baseurl=http://tigeros.ritlug.com/packages/source/
+baseurl=http://builder.ritlug.com/packages/source/
 enabled=0
 metadata_expire=7d
 gpgcheck=1
