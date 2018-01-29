@@ -6,7 +6,7 @@ keyboard 'us'
 # Root password
 rootpw --iscrypted --lock locked
 # Use network installation
-url --mirrorlist="https://mirrors.fedoraproject.org/mirrorlist?repo=fedora-$releasever&arch=$basearch"
+#url --mirrorlist="https://mirrors.fedoraproject.org/mirrorlist?repo=fedora-$releasever&arch=$basearch"
 # System language
 lang en_US.UTF-8
 # Firewall configuration
