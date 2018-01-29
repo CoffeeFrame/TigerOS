@@ -17,17 +17,6 @@
         - dnf-automatic
         - python-firewall
         - certbot
-        # CI
-        - nginx
-        - jenkins
-        - mock
-        - docker-ce
-        - pungi
-        - rpm-sign
-        - fedora-packager
-        - fedpkg
-#        - python-jenkins
-        # need to get anaconda install class for TigerOS possibly
         # these are personal pref tools - uncomment if desired
         # use ansible roles?
 #        - mosh
@@ -47,11 +36,6 @@
         service: ssh
         permanent: true
         state: enabled
-    - name: Allow 8080 (Jenkins)
-      firewalld:
-        port: 8080/tcp
-        permanent: true
-        state: enabled
     - name: Allow Cockpit
       firewalld:
         service: cockpit
@@ -60,11 +44,6 @@
     - name: Enable nginx service
       systemd:
         name: nginx
-        enabled: yes
-        state: started
-    - name: Enable Jenkins service
-      systemd:
-        name: jenkins
         enabled: yes
         state: started
     - name: Enable Cockpit service
@@ -93,30 +72,3 @@
     - name: Update packages
       command: dnf update
       become: true
-    - name: Allow Jenkins sudo access for master
-      become: true
-      lineinfile:
-        path: /etc/sudoers
-        line: 'jenkins ALL=NOPASSWD: /var/lib/jenkins/jobs/TigerOS-Master/workspace/tigeros/build-scripts/ci-build-mock.sh'
-        state: present
-    - name: Allow Jenkins sudo access for devel
-      become: true
-      lineinfile:
-        path: /etc/sudoers
-        line: 'jenkins ALL=NOPASSWD: /var/lib/jenkins/jobs/TigerOS-Devel/workspace/tigeros/build-scripts/ci-build-mock.sh'
-        state: present
-    - name: Allow Jenkins sudo access for nightly
-      become: true
-      lineinfile:
-        path: /etc/sudoers
-        line: 'jenkins ALL=NOPASSWD: /var/lib/jenkins/jobs/TigerOS-Nightly/workspace/tigeros/build-scripts/ci-build-mock.sh'
-        state: present
-#    - jenkins_job:
-#        name: TigerOS-Master
-#        state: present
-#    - jenkins_job:
-#        name: TigerOS-Devel
-#        state: present
-#    - jenkins_job:
-#        name: TigerOS-Nightly
-#        state: present
