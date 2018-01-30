@@ -8,7 +8,7 @@
       dnf: name="{{ item }}" state=present
       become: true
       with_items:
-        # base/management
+         base/management
         - git
         - openssh-server
         - fail2ban
@@ -19,8 +19,7 @@
         - certbot
         # these are personal pref tools - uncomment if desired
         # use ansible roles?
-#        - mosh
-#        - vim
+        - vim
     - name: Allow HTTPS (nginx)
       firewalld:
         service: https
@@ -72,3 +71,14 @@
     - name: Update packages
       command: dnf update
       become: true
+    - name: Add certbot autorenewal
+      cron: 
+       name: "Certbot autorenew"
+       user: "root"
+       minute: "*"
+       hour: "7"
+       day: "19"
+       month: "*"
+       weekday: "*"
+       job: "certbot-3 -q renew"
+      
