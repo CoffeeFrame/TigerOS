@@ -1,14 +1,11 @@
 ---
 - hosts: 127.0.0.1
   tasks:
-    - name: Add Docker CE repo
-      command: dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
-      become: true
     - name: Install packages
       dnf: name="{{ item }}" state=present
       become: true
       with_items:
-         base/management
+        #base/management
         - git
         - openssh-server
         - fail2ban
@@ -17,8 +14,6 @@
         - dnf-automatic
         - python-firewall
         - certbot
-        # these are personal pref tools - uncomment if desired
-        # use ansible roles?
         - vim
     - name: Allow HTTPS (nginx)
       firewalld:
@@ -63,13 +58,8 @@
     - name: Reload Firewall
       command: firewall-cmd --reload
       become: true
-    - name: Enable Docker service
-      systemd:
-        name: docker
-        enabled: yes
-        state: started
     - name: Update packages
-      command: dnf update
+      command: dnf update --refresh -y
       become: true
     - name: Add certbot autorenewal
       cron: 
@@ -81,4 +71,46 @@
        month: "*"
        weekday: "*"
        job: "certbot-3 -q renew"
-      
+   - name: Add insync repo
+      become: true
+      copy:
+       dest: /etc/nginx/nginx.conf
+       mode: 0644
+       owner: root
+       group: root
+       content: |
+        # For more information on configuration, see:
+        #   * Official English Documentation: http://nginx.org/en/docs/
+        #   * Official Russian Documentation: http://nginx.org/ru/docs/
+
+        user nginx;
+        worker_processes auto;
+        error_log /var/log/nginx/error.log;
+        pid /run/nginx.pid;
+
+        # Load dynamic modules. See /usr/share/nginx/README.dynamic.
+        include /usr/share/nginx/modules/*.conf;
+
+        events {
+            worker_connections 1024;
+        }
+        http{
+        server {
+                listen 80;
+                server_name builder.ritlug.com;
+                root    /var/www/;
+                # Load configuration files for the default server block.
+                include /etc/nginx/default.d/*.conf;
+                location / {
+                        autoindex on;
+                        autoindex_exact_size off;
+                }
+
+                error_page 404 /404.html;
+                    location = /40x.html {
+                }
+
+                error_page 500 502 503 504 /50x.html;
+                    location = /50x.html {
+                }       
+         
