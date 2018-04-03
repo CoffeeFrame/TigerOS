@@ -385,6 +385,10 @@ EOF
 
 %end
 
+%post
+gsettings set org.gnome.desktop.interface clock-format 12h
+%end
+
 %packages
 @anaconda-tools
 @base-x
@@ -432,6 +436,7 @@ tigeros-logos
 tigeros-release
 tigeros-repos
 tigeros-scripts
+tigeros-ui-tweaks
 transmission
 vim
 wget
